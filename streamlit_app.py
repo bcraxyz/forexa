@@ -1,24 +1,24 @@
-import requests
+import os, requests
 import pandas as pd
 import streamlit as st
 
 # Set the page title and get ExchangeRate API key
 st.set_page_config(page_title="Currency Converter")
 st.subheader("Currency Converter")
-with st.sidebar:
-    exchangerate_api_key = st.text_input("ExchangeRate API key", type="password")
+
+exchangerate_api_key = os.environ["EXCHANGERATE_API_KEY"]
 
 # Get the base currency, quote currency and amount from the user
 col1, col2 = st.columns(2)
 with col1:
-    base_currency = st.selectbox("Base Currency", ("USD", "EUR", "SGD"))
+    base_currency = st.selectbox("Base Currency", ("SGD", "USD", "EUR"))
 with col2:
     base_amount = st.number_input("Amount", value=1.0)
 
 quote_currency = st.multiselect(
     "Quote Currency", 
     ("USD", "EUR", "SGD", "MYR", "THB", "IDR", "INR"), 
-    ("SGD", "MYR", "IDR", "INR")
+    ("MYR", "THB", "IDR", "INR")
     )
 
 # Convert the base amount to the selected currencies
